@@ -1,0 +1,115 @@
+<project name="HVAC" threads="1" pubsub="auto" heartbeat-interval="1">
+  <metadata>
+    <meta id="studioUploadedBy">sasdemo</meta>
+    <meta id="studioUploaded">1575595081923</meta>
+    <meta id="studioModifiedBy">sasdemo</meta>
+    <meta id="studioModified">1578027515072</meta>
+    <meta id="layout">{"cq1":{"ModelReader":{"x":-370,"y":-420},"SVDD_score":{"x":-365,"y":-150},"w_data":{"x":-640,"y":-285}}}</meta>
+  </metadata>
+  <contqueries>
+    <contquery name="cq1">
+      <windows>
+        <window-source pubsub="true" insert-only="true" autogen-key="true" index="pi_EMPTY" name="w_data">
+          <schema>
+            <fields>
+              <field name="ID" type="int64" key="true"/>
+              <field name="Datetime" type="stamp"/>
+              <field name="AHU" type="string"/>
+              <field name="CHW_VALVE" type="double"/>
+              <field name="CHW_VALVE_POSIT" type="double"/>
+              <field name="DIS_AIR_TEMP" type="double"/>
+              <field name="DUCT_PRESS_ACTV" type="double"/>
+              <field name="MAX_CO2_VAL" type="double"/>
+              <field name="MIXED_AIR_TEMP" type="double"/>
+              <field name="RTRN_AIR_TEMP" type="double"/>
+              <field name="SUPPL_FAN_SP" type="double"/>
+            </fields>
+          </schema>
+          <connectors>
+            <connector class="fs" name="New_Connector_1">
+              <properties>
+                <property name="type"><![CDATA[pub]]></property>
+                <property name="dateformat"><![CDATA[%d%b%y:%k:%M:%S]]></property>
+                <property name="header"><![CDATA[1]]></property>
+                <property name="noautogenfield"><![CDATA[true]]></property>
+                <property name="addcsvopcode"><![CDATA[true]]></property>
+                <property name="addcsvflags"><![CDATA[normal]]></property>
+                <property name="fsname"><![CDATA[/home/sasdemo/iot/hvac/esp_project/hvac_scr.csv]]></property>
+                <property name="fstype"><![CDATA[csv]]></property>
+              </properties>
+            </connector>
+          </connectors>
+        </window-source>
+        <window-model-reader name="ModelReader" pubsub="true" model-type="astore">
+          <parameters>
+            <properties>
+              <property name="reference"><![CDATA[/home/sasdemo/iot/hvac/esp_project/hvac_svdd]]></property>
+              <property name="action"><![CDATA[load]]></property>
+              <property name="type"><![CDATA[astore]]></property>
+            </properties>
+          </parameters>
+        </window-model-reader>
+        <window-score name="SVDD_score" pubsub="true">
+          <schema>
+            <fields>
+              <field name="ID" type="int64" key="true"/>
+              <field name="Datetime" type="stamp"/>
+              <field name="AHU" type="string"/>
+              <field name="CHW_VALVE" type="double"/>
+              <field name="CHW_VALVE_POSIT" type="double"/>
+              <field name="DIS_AIR_TEMP" type="double"/>
+              <field name="DUCT_PRESS_ACTV" type="double"/>
+              <field name="MAX_CO2_VAL" type="double"/>
+              <field name="MIXED_AIR_TEMP" type="double"/>
+              <field name="RTRN_AIR_TEMP" type="double"/>
+              <field name="SUPPL_FAN_SP" type="double"/>
+              <field name="_SVDDDISTANCE_" type="double"/>
+              <field name="_SVDDSCORE_" type="double"/>
+            </fields>
+          </schema>
+          <models>
+            <offline model-type="astore">
+              <input-map>
+                <properties>
+                  <property name="SUPPL_FAN_SP"><![CDATA[SUPPL_FAN_SP]]></property>
+                  <property name="DIS_AIR_TEMP"><![CDATA[DIS_AIR_TEMP]]></property>
+                  <property name="DUCT_PRESS_ACTV"><![CDATA[DUCT_PRESS_ACTV]]></property>
+                  <property name="MIXED_AIR_TEMP"><![CDATA[MIXED_AIR_TEMP]]></property>
+                  <property name="RTRN_AIR_TEMP"><![CDATA[RTRN_AIR_TEMP]]></property>
+                  <property name="MAX_CO2_VAL"><![CDATA[MAX_CO2_VAL]]></property>
+                  <property name="CHW_VALVE"><![CDATA[CHW_VALVE]]></property>
+                  <property name="CHW_VALVE_POSIT"><![CDATA[CHW_VALVE_POSIT]]></property>
+                  <property name="AHU"><![CDATA[AHU]]></property>
+                  <property name="DATETIME"><![CDATA[Datetime]]></property>
+                </properties>
+              </input-map>
+              <output-map>
+                <properties>
+                  <property name="AHU"><![CDATA[AHU]]></property>
+                  <property name="DATETIME"><![CDATA[Datetime]]></property>
+                  <property name="_SVDDDISTANCE_"><![CDATA[_SVDDDISTANCE_]]></property>
+                  <property name="_SVDDSCORE_"><![CDATA[_SVDDSCORE_]]></property>
+                </properties>
+              </output-map>
+            </offline>
+          </models>
+          <connectors>
+            <connector class="fs" name="New_Connector_1">
+              <properties>
+                <property name="type"><![CDATA[sub]]></property>
+                <property name="header"><![CDATA[true]]></property>
+                <property name="snapshot"><![CDATA[true]]></property>
+                <property name="fsname"><![CDATA[/home/sasdemo/iot/hvac/esp_project/svdd_out.csv]]></property>
+                <property name="fstype"><![CDATA[csv]]></property>
+              </properties>
+            </connector>
+          </connectors>
+        </window-score>
+      </windows>
+      <edges>
+        <edge source="ModelReader" target="SVDD_score" role="model"/>
+        <edge source="w_data" target="SVDD_score" role="data"/>
+      </edges>
+    </contquery>
+  </contqueries>
+</project>

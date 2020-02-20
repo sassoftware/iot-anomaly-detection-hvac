@@ -1,0 +1,1 @@
+This folder contains program to create SVDD model (svdd_model.sas).

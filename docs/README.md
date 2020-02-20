@@ -1,0 +1,1 @@
+This folder contains step by step instructions to build model in SAS Event Stream Processing Studio (BuildModel.md)

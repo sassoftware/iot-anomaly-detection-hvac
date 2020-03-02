@@ -18,13 +18,13 @@ The host is the system where SAS Event Stream Processing Studio is installed.
 1.  Go to **Projects** page
     *  Click on **More actions**
     *  Select **Upload Projects** 
-    *  Navigate to the location that contains the downloaded copy of [hvac.xml](project/HVAC.xml) by clicking on **Upload Project files**
+    *  Navigate to the location that contains the downloaded copy of [hvac.xml](../project/HVAC.xml) by clicking on **Upload Project files**
     *  Close and return to Project page
     *  New project named HVAC is created, double click to open
     *  Review properties of source and calculate windows
     *  Make following changes
         *  Change path to under Fsname in Input Data Connector to reflect accessible location
-        ![](images/esp1.PNG) 
+        ![](../images/esp1.PNG) 
         *  Similarly update path of Subscriber connector to reflect accessible location
     * Save the Project
     * Follow **Sections 3-4** as described below. 
@@ -44,8 +44,8 @@ The host is the system where SAS Event Stream Processing Studio is installed.
     *  Expand **Input Data (Publisher) Connectors**
     *  Add new connector
     *  Add details to receive data from csv file 
-      *  Copy paste or type the path to the [hvac_scr.csv](data/hvac_scr.csv) file under Fsname and select Fstype as csv
-      ![](images/esp1.PNG) 
+      *  Copy paste or type the path to the [hvac_scr.csv](../data/hvac_scr.csv) file under Fsname and select Fstype as csv
+      ![](../images/esp1.PNG) 
       *  Click ‘All Properties’ and add details from the table below and click ‘OK’
       
             | Property | Value |
@@ -58,7 +58,7 @@ The host is the system where SAS Event Stream Processing Studio is installed.
             
     *  Click on Output schema on the right pane and edit rows   
     *  Click on Import Schema and select XML snippet.
-       <img src="images/pic_b.png" width="400" > 
+       <img src="../images/pic_b.png" width="400" > 
     *  Copy the xml below and paste it in the window. 
       ``` 
        <fields>
@@ -79,35 +79,35 @@ The host is the system where SAS Event Stream Processing Studio is installed.
     ###### **b. Configure Model Reader Window**
     *  Add Model Reader window under Analytics to workspace
     *  Select ASTORE as Model type under Settings and check box for 'Load a model when project is started'
-    *  Add location to point to locally saved [astore file](project/hvac_svdd) under reference property.
+    *  Add location to point to locally saved [astore file](../project/hvac_svdd) under reference property.
     *  Add ASTORE specific properties as shown below (*Tip: click on New Row* ) 
        
-       ![](images/esp2.PNG) 
+       ![](../images/esp2.PNG) 
        
     ###### **c. Configure Score Window**  
     *  Add Score window under Analytics to workspace
     *  Connect the Source and Model Reader with Score window
         
-        ![](images/esp.PNG) 
+        ![](../images/esp.PNG) 
     *  Select Name and Description 
     *  Expand Settings
        *  Select ‘Offline’ under Model source
        *  Select 'ASTORE' under Model Type
        *  Click on 'Generate Input and Output maps from ASTORE file'
        
-       ![](images/esp3.PNG)
+       ![](../images/esp3.PNG)
        
        *  Add path to locally saved [astore file](project/hvac_svdd)
        *  Check box for 'Create output schema fields based on output map fields names' and select OK.
        *  Expand Input and Output Map to review the properties.
             *  Select Datetime under Field to map the Role.
             
-       ![](images/esp4.PNG)
+       ![](../images/esp4.PNG)
        
     *  Go to **Output Schema**, click on 'Edit rows' 
        *  Click on Import Schema and copy fields from Input Schema that you may want to keep in the output results. 
        
-       ![](images/esp5.PNG)
+       ![](../images/esp5.PNG)
        
     *  Save the Project 
     *  Follow **Sections 3-4** as described below.
@@ -125,10 +125,10 @@ The host is the system where SAS Event Stream Processing Studio is installed.
    *  Click on **Enter Test Mode**
    *  Click on **Run Test**
    *  The image below shows the streaming data coming in and results from SVDD. 
-     ![](images/esp6.png)
+     ![](../images/esp6.png)
 
 
-***Tip:*** Check [sample project template](project/hvac.xml) to compare project properties.
+***Tip:*** Check [sample project template](../project/hvac.xml) to compare project properties.
 
 
 

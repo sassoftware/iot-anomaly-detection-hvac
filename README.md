@@ -10,13 +10,13 @@ Key take-aways from the use case:
 * Learn how to build an anomaly detection model using [**Support Vector Data Description (SVDD)**](https://go.documentation.sas.com/?docsetId=casml&docsetVersion=8.5&docsetTarget=casml_svdd_overview.htm&locale=en) algorithm 
 * Learn how to deploy an offline model for real-time diagnostics
 
-We will use the [**Support Vector Data Description (SVDD)**](https://go.documentation.sas.com/?docsetId=casml&docsetVersion=8.5&docsetTarget=casml_svdd_overview.htm&locale=en) algorithm, packaged in  [**SAS Visual Data Mining and Machine Learning (VDMML)**](https://support.sas.com/en/software/visual-data-mining-and-machine-learning-support.html#documentation), and deploy it in [**SAS Event Stream Processing Studio (ESP)**](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espstudio&docsetTarget=titlepage.htm&locale=en) to detect outliers in real time using streaming data.
+We will use the Support Vector Data Description (SVDD) algorithm, packaged in  [**SAS Visual Data Mining and Machine Learning (VDMML)**](https://go.documentation.sas.com/?docsetId=casml&docsetTarget=titlepage.htm&docsetVersion=8.4&locale=en), and deploy it in [**SAS Event Stream Processing Studio (ESP Studio)**](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espstudio&docsetTarget=titlepage.htm&locale=en) to detect outliers in real time using streaming data.
 
 ### Prerequisites
 
 List of required software offered as part of [**SAS Analytics for IoT**](https://www.sas.com/en_us/software/analytics-iot.html) 
 *  [SAS Visual Analytics](https://support.sas.com/en/software/visual-analytics-support.html#documentation)
-*  [SAS Visual Data Mining and Machine Learning](https://support.sas.com/en/software/visual-data-mining-and-machine-learning-support.html#documentation)
+*  [SAS Visual Data Mining and Machine Learning](https://go.documentation.sas.com/?docsetId=casml&docsetTarget=titlepage.htm&docsetVersion=8.4&locale=en)
 *  [SAS Studio](https://support.sas.com/en/software/studio-support.html#documentation)
 *  [SAS Event Stream Processing Studio](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espstudio&docsetTarget=titlepage.htm&locale=en)
 
@@ -94,7 +94,7 @@ Learn more about PROC SVDD [here.](https://go.documentation.sas.com/?cdcId=pgmsa
 
 ### Online Scoring
 
-We will use **SAS Event Stream Processing Studio** to deploy the SVDD model developed offline and score it online for real-time anomaly detection.
+We will use **ESP Studio** to deploy the SVDD model developed offline and score it online for real-time anomaly detection.
 
 <img src="images/esp.PNG" width=300>
 
@@ -113,7 +113,7 @@ In addition, we see 13 events from AHU 1 with SVDD distance greater than the cri
 
 ### Summary
 
-**SAS Analytics for IoT** offers an optimized IoT Solution ecosystem and addresses the entire analytical lifecycle. Read more about **SAS Analytics for IoT** [here.](https://www.sas.com/en_us/software/analytics-iot.html) 
+**SAS Analytics for IoT** offers an optimized IoT Solution ecosystem and addresses the entire analytical lifecycle. 
 
 ## Contributing
 

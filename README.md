@@ -125,4 +125,9 @@ This project is licensed under the [Apache 2.0 License](LICENSE).
 
 ## Additional Resources
 
-* SAS Event Stream Processing Streamviewer [Documentation](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espvisualize&docsetTarget=titlepage.htm&locale=en)
+* [General information](https://www.sas.com/en_us/software/analytics-iot.html) about SAS Analytics for IoT
+* Reference information about the [SVDD procedure](https://go.documentation.sas.com/?cdcId=pgmsascdc&cdcVersion=9.4_3.4&docsetId=casml&docsetTarget=casml_svdd_overview.htm&locale=en) of SAS Visual Data Mining and Machine Learning
+* An [overview](https://go.documentation.sas.com/?cdcId=vacdc&cdcVersion=8.4&docsetId=vaov&docsetTarget=titlepage.htm&locale=en) of SAS Visual Analytics
+* Documentation for [SAS Event Stream Processing Streamviewer](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espvisualize&docsetTarget=titlepage.htm&locale=en)  
+* SAS Support Communities [website](https://communities.sas.com/)
+* You can find additional IoT use cases on the [SAS for Developers website](https://developer.sas.com/guides/iot.html)

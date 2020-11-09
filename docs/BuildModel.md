@@ -58,7 +58,7 @@ The host is the system where SAS Event Stream Processing Studio is installed.
             
     *  Click on Output schema on the right pane and edit rows   
     *  Click on Import Schema and select XML snippet.
-       <img src="images/pic_b.png" width="400" > 
+       <img src="/images/pic_b.png" width="400" > 
     *  Copy the xml below and paste it in the window. 
       ``` 
        <fields>

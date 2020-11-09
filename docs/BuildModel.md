@@ -18,7 +18,7 @@ The host is the system where SAS Event Stream Processing Studio is installed.
 1.  Go to **Projects** page
     *  Click on **More actions**
     *  Select **Upload Projects** 
-    *  Navigate to the location that contains the downloaded copy of [anomaly_detection_ahu.xml](project/anomaly_detection_ahu.xml) by clicking on **Upload Project files**
+    *  Navigate to the location that contains the downloaded copy of [anomaly_detection_ahu.xml](/project/anomaly_detection_ahu.xml) by clicking on **Upload Project files**
     *  Close and return to Project page
     *  New project named **anomaly_detection_ahu** is created, double click to open
     *  Review properties of source and calculate windows

@@ -1,6 +1,6 @@
 # Anomaly Detection in Air Handling Units
 
-<img src="https://img.shields.io/badge/Category-Condition--Based%20Maintenance-blue"> <img src="https://img.shields.io/badge/Sub--Category-Anomaly%20Detection-yellowgreen"> <img src="https://img.shields.io/badge/Difficulty-Intermediate-yellow"> <img src="https://img.shields.io/badge/Analytical%20Method-Support%20Vector%20Data%20Description (SVDD)-brightgreen"> <img src="https://img.shields.io/badge/Updated-Dec%202019-orange">
+<img src="https://img.shields.io/badge/Category-Condition--Based%20Maintenance-blue"> <img src="https://img.shields.io/badge/Sub--Category-Anomaly%20Detection-yellowgreen"> <img src="https://img.shields.io/badge/Difficulty-Intermediate-yellow"> <img src="https://img.shields.io/badge/Analytical%20Method-Support%20Vector%20Data%20Description (SVDD)-brightgreen"> <img src="https://img.shields.io/badge/Updated-Oct%202020-orange">
 
 ## Overview
 
@@ -10,15 +10,15 @@ Key take-aways from the use case:
 * Learn how to build an anomaly detection model using [**Support Vector Data Description (SVDD)**](https://go.documentation.sas.com/?docsetId=casml&docsetVersion=8.5&docsetTarget=casml_svdd_overview.htm&locale=en) algorithm 
 * Learn how to deploy an offline model for real-time diagnostics
 
-We will use the Support Vector Data Description (SVDD) algorithm, packaged in  [**SAS Visual Data Mining and Machine Learning (VDMML)**](https://go.documentation.sas.com/?docsetId=casml&docsetTarget=titlepage.htm&docsetVersion=8.4&locale=en), and deploy it in [**SAS Event Stream Processing Studio (ESP Studio)**](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espstudio&docsetTarget=titlepage.htm&locale=en) to detect outliers in real time using streaming data.
+We will use the [**Support Vector Data Description (SVDD)**](https://go.documentation.sas.com/?docsetId=casml&docsetVersion=8.5&docsetTarget=casml_svdd_overview.htm&locale=en) algorithm, packaged in  [**SAS Visual Data Mining and Machine Learning (VDMML)**](https://support.sas.com/en/software/visual-data-mining-and-machine-learning-support.html#documentation), and deploy it in [**SAS Event Stream Processing Studio (ESP)**](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espstudio&docsetTarget=titlepage.htm&locale=en) to detect outliers in real time using streaming data.
 
 ### Prerequisites
 
 List of required software offered as part of [**SAS Analytics for IoT**](https://www.sas.com/en_us/software/analytics-iot.html) 
 *  [SAS Visual Analytics](https://support.sas.com/en/software/visual-analytics-support.html#documentation)
-*  [SAS Visual Data Mining and Machine Learning](https://go.documentation.sas.com/?docsetId=casml&docsetTarget=titlepage.htm&docsetVersion=8.4&locale=en)
+*  [SAS Visual Data Mining and Machine Learning](https://support.sas.com/en/software/visual-data-mining-and-machine-learning-support.html#documentation)
 *  [SAS Studio](https://support.sas.com/en/software/studio-support.html#documentation)
-*  [SAS Event Stream Processing Studio](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espstudio&docsetTarget=titlepage.htm&locale=en)
+*  [SAS Event Stream Processing Studio](https://support.sas.com/en/software/event-stream-processing-support.html#documentation)
 
 ## Getting Started
 
@@ -67,11 +67,11 @@ We are using SVDD based K-charts to determine anomalous behavior in AHUs. K-char
 
 ```
 /*** Phase 1: Model Training ***/
-proc svdd data=mycas.hvac_train ;
-    id AHU Datetime;
+proc svdd data=mycas.ahu_train ;
+    id AHU ;
     input &model_var. /level=interval;
     kernel rbf / bw=94;
-    savestate rstore=mycas.hvac_svdd;
+    savestate rstore=mycas.svdd_ahu;
  run;
 ``` 
 <img src="images/model_1.png" width=300>
@@ -81,10 +81,10 @@ This model of normal operations is then operationalized in phase 2 for anomaly d
 ```
 /*** Phase 2: Score to get distance value to monitor anomaly ***/
  proc astore;
-    score data=mycas.hvac_score
-    out=mycas.hvac_svdd_out
-    rstore=mycas.hvac_svdd;
-    download rstore=mycas.hvac_svdd store='<your path>/hvac_svdd';
+    score data=mycas.ahu_scr
+    out=mycas.ahu_svdd_out
+    rstore=mycas.svdd_ahu;
+    download rstore=mycas.svdd_ahu store='<your path>/svdd_ahu.astore';
  quit;
  
 ``` 
@@ -92,28 +92,35 @@ You can download astore from the model using [PROC ASTORE](https://go.documentat
 
 Learn more about PROC SVDD [here.](https://go.documentation.sas.com/?cdcId=pgmsascdc&cdcVersion=9.4_3.5&docsetId=casml&docsetTarget=casml_svdd_overview.htm&locale=en)
 
+See this [link](/programs/Anomaly_Detection_Air_Handling_Units_Model_Generation.ipynb) for Python code for the analysis.
+
 ### Online Scoring
 
-We will use **ESP Studio** to deploy the SVDD model developed offline and score it online for real-time anomaly detection.
+We will use **SAS Event Stream Processing Studio** to deploy the SVDD model developed offline and score it online for real-time anomaly detection.
 
 <img src="images/esp.PNG" width=300>
 
 See detailed steps to [build and test](/docs/BuildModel.md) ESP project.
+
+Refer to this [link](programs/Anomaly_Detection_Air_Handling_Units_Model_Inferencing.ipynb) for Jupyter notebook example to deploy offline model using SAS Event Stream Processing ESPpy module.
+
 
 ### Result Interpretation
 
 Below we are visualizing results from scoring SVDD model in ESP in **SAS Visual Analytics** for the two AHUs. 
 
 The figures below show SVDD distance (<img src="images/dist.png" width=50> value) plotted against datetime. The horizontal reference line indicates threshold r-sqaure value (0.90631). This threshold value can be used as benchmark for indicating anomalous behavior. On top of the benchmark, by calculating 3-sigma values we can set thresholds for warning, alert and critical conditions for AHUs.
-It detects outliers in AHU 1 (blue), AHU 2 (orange) is operating normally. The deviation observed during winter break is picked up by SVDD as a minor outlier for AHU 1 since the system was going though a scheduled maintenance. 
-
-In addition, we see 13 events from AHU 1 with SVDD distance greater than the critical threshold (in this scenario critical threshold is 2-sigma value calculated from training data). Using SVDD algorithm these anomalies can be detected and acted upon.
+It detects outliers in AHU 1 (blue), AHU 2 (orange) is operating normally. The deviation observed during winter break is picked up by SVDD as a minor outlier for AHU 1 since the system was going though a scheduled maintenance.  
 
 <img src="images/svdd.png" >
 
+In addition, we see 13 events from AHU 1 with SVDD distance greater than the critical threshold (in this scenario critical threshold is 2-sigma value calculated from training data). We can also see AHU 2 is working fine but AHU 1 is consistently having issues over the 4-month period. Using SVDD algorithm these anomalies can be detected and acted upon.
+
+Anomaly detection for condition based monitoring can drive higher asset uptime, utilization, reduce material and maintenance costs, and increase yields. 
+
 ### Summary
 
-**SAS Analytics for IoT** offers an optimized IoT Solution ecosystem and addresses the entire analytical lifecycle. 
+**SAS Analytics for IoT** offers an optimized IoT Solution ecosystem and addresses the entire analytical lifecycle. Read more about **SAS Analytics for IoT** [here.](https://www.sas.com/en_us/software/analytics-iot.html) 
 
 ## Contributing
 
@@ -126,8 +133,10 @@ This project is licensed under the [Apache 2.0 License](LICENSE).
 ## Additional Resources
 
 * [General information](https://www.sas.com/en_us/software/analytics-iot.html) about SAS Analytics for IoT
-* Reference information about the [SVDD procedure](https://go.documentation.sas.com/?cdcId=pgmsascdc&cdcVersion=9.4_3.4&docsetId=casml&docsetTarget=casml_svdd_overview.htm&locale=en) of SAS Visual Data Mining and Machine Learning
-* An [overview](https://go.documentation.sas.com/?cdcId=vacdc&cdcVersion=8.4&docsetId=vaov&docsetTarget=titlepage.htm&locale=en) of SAS Visual Analytics
-* Documentation for [SAS Event Stream Processing Streamviewer](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.1&docsetId=espvisualize&docsetTarget=titlepage.htm&locale=en)  
+* Technical details about [how SAS Event Stream Processing deploys offline model](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.2&docsetId=espan&docsetTarget=p0wmfh8n175cvmn14z6iamhb8zfk.htm&locale=en)
+* Reference for [Using Python Interface](https://go.documentation.sas.com/?cdcId=espcdc&cdcVersion=6.2&docsetId=espmdlpython&docsetTarget=titlepage.htm&locale=en)
+* Reference for [Getting Started with SAS Viya for Python](https://go.documentation.sas.com/?cdcId=pgmsascdc&cdcVersion=9.4_3.5&docsetId=caspg3&docsetTarget=titlepage.htm&locale=en)
+* An [overview](https://support.sas.com/en/software/visual-analytics-support.html#documentation) of SAS Visual Analytics
 * SAS Support Communities [website](https://communities.sas.com/)
 * You can find additional IoT use cases on the [SAS for Developers website](https://developer.sas.com/guides/iot.html)
+* SAS [Event Stream Processing Free Trial](https://www.sas.com/en_us/software/event-stream-processing.html)

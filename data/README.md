@@ -1,1 +1,1 @@
-This folder contains training (hvac_train.csv) and scoring (hvac_scr.csv) data which consists of sensor values such as mixed air temperature, return air temperature, chilled water valve status, duct pressure, supply fan speed, etc.
+This folder contains training (ahu_train.csv) and scoring (ahu_scr.csv) data which consists of sensor values such as mixed air temperature, return air temperature, chilled water valve status, duct pressure, supply fan speed, etc.

@@ -1,1 +1,1 @@
-This folder contains reference XML code (HVAC.xml) for ESP project and ASTORE file (hvac_svdd) from SVDD model.
+This folder contains reference XML code (anomaly_detection_ahu.xml) for ESP project and ASTORE file (svdd_ahu.astore) from SVDD model.
